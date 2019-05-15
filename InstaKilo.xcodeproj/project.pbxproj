@@ -13,6 +13,7 @@
 		E984923B228C6D5200A5A9FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E984923A228C6D5200A5A9FF /* Assets.xcassets */; };
 		E984923E228C6D5200A5A9FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E984923C228C6D5200A5A9FF /* LaunchScreen.storyboard */; };
 		E9849241228C6D5200A5A9FF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E9849240228C6D5200A5A9FF /* main.m */; };
+		E9849249228C6FE300A5A9FF /* CustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9849248228C6FE300A5A9FF /* CustomCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		E984923D228C6D5200A5A9FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E984923F228C6D5200A5A9FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9849240228C6D5200A5A9FF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E9849247228C6FE300A5A9FF /* CustomCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCell.h; sourceTree = "<group>"; };
+		E9849248228C6FE300A5A9FF /* CustomCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 				E9849232228C6D5100A5A9FF /* AppDelegate.m */,
 				E9849234228C6D5100A5A9FF /* ViewController.h */,
 				E9849235228C6D5100A5A9FF /* ViewController.m */,
+				E9849247228C6FE300A5A9FF /* CustomCollectionViewCell.h */,
+				E9849248228C6FE300A5A9FF /* CustomCollectionViewCell.m */,
 				E9849237228C6D5100A5A9FF /* Main.storyboard */,
 				E984923A228C6D5200A5A9FF /* Assets.xcassets */,
 				E984923C228C6D5200A5A9FF /* LaunchScreen.storyboard */,
@@ -144,6 +149,7 @@
 				E9849236228C6D5100A5A9FF /* ViewController.m in Sources */,
 				E9849241228C6D5200A5A9FF /* main.m in Sources */,
 				E9849233228C6D5100A5A9FF /* AppDelegate.m in Sources */,
+				E9849249228C6FE300A5A9FF /* CustomCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
