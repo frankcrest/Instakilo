@@ -10,8 +10,9 @@
 #import "CustomCollectionViewCell.h"
 #import "CustomCollectionReusableView.h"
 #import "DecorationView.h"
+#import "CustomFlowLayout.h"
 
-@interface ViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface ViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic,strong) UICollectionView* collectionView;
 @property (nonatomic,strong) NSArray* imageNamesForSubject1;
@@ -54,13 +55,8 @@
 }
 
 -(void)setupCollectionView{
-    UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc]init];
-    UICollectionView* collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
-    layout.headerReferenceSize = CGSizeMake(self.collectionView.frame.size.width, 20);
-    [layout registerClass:[DecorationView class] forDecorationViewOfKind:@"decorationView"];
-  
-    
-    self.layout = layout;
+    CustomFlowLayout* customFlowLayout = [[CustomFlowLayout alloc]init];
+    UICollectionView* collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout: customFlowLayout];
     
     collectionView.delegate = self;
     collectionView.dataSource = self;
@@ -73,7 +69,7 @@
     
     self.collectionView = collectionView;
     [NSLayoutConstraint activateConstraints:@[
-                                              [collectionView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:15],
+                                              [collectionView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:0],
                                               [collectionView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:0],
                                               [collectionView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:0],
                                               [collectionView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:0],
@@ -109,6 +105,15 @@
         self.selectedImageCollection = self.imageCollectionByLocation;
         [self.collectionView reloadData];
     }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    return CGSizeMake(self.collectionView.frame.size.width, 20);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return CGSizeMake(self.collectionView.frame.size.width / 4, self.collectionView.frame.size.width / 4);
 }
 
 

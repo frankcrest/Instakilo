@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E944B670228CA7A600606F11 /* CustomFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E944B66F228CA7A600606F11 /* CustomFlowLayout.m */; };
 		E9849233228C6D5100A5A9FF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E9849232228C6D5100A5A9FF /* AppDelegate.m */; };
 		E9849236228C6D5100A5A9FF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9849235228C6D5100A5A9FF /* ViewController.m */; };
 		E9849239228C6D5100A5A9FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9849237228C6D5100A5A9FF /* Main.storyboard */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E944B66E228CA7A600606F11 /* CustomFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomFlowLayout.h; sourceTree = "<group>"; };
+		E944B66F228CA7A600606F11 /* CustomFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomFlowLayout.m; sourceTree = "<group>"; };
 		E984922E228C6D5100A5A9FF /* InstaKilo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaKilo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9849231228C6D5100A5A9FF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E9849232228C6D5100A5A9FF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 				E984924E228C874100A5A9FF /* DecorationView.m */,
 				E9849247228C6FE300A5A9FF /* CustomCollectionViewCell.h */,
 				E9849248228C6FE300A5A9FF /* CustomCollectionViewCell.m */,
+				E944B66E228CA7A600606F11 /* CustomFlowLayout.h */,
+				E944B66F228CA7A600606F11 /* CustomFlowLayout.m */,
 				E9849237228C6D5100A5A9FF /* Main.storyboard */,
 				E984923A228C6D5200A5A9FF /* Assets.xcassets */,
 				E984923C228C6D5200A5A9FF /* LaunchScreen.storyboard */,
@@ -160,6 +165,7 @@
 				E9849236228C6D5100A5A9FF /* ViewController.m in Sources */,
 				E9849241228C6D5200A5A9FF /* main.m in Sources */,
 				E9849233228C6D5100A5A9FF /* AppDelegate.m in Sources */,
+				E944B670228CA7A600606F11 /* CustomFlowLayout.m in Sources */,
 				E9849249228C6FE300A5A9FF /* CustomCollectionViewCell.m in Sources */,
 				E984924C228C7CCF00A5A9FF /* CustomCollectionReusableView.m in Sources */,
 			);

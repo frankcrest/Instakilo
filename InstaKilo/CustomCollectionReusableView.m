@@ -16,6 +16,8 @@
     if (self) {
         _label = [[UILabel alloc]initWithFrame:CGRectZero];
         _label.translatesAutoresizingMaskIntoConstraints = 0;
+        _label.backgroundColor = [UIColor whiteColor];
+        _label.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_label];
         
         [NSLayoutConstraint activateConstraints:@[

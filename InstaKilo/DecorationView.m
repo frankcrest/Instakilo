@@ -14,7 +14,18 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"floral"]];
+        UIImage* image = [UIImage imageNamed:@"floral"];
+        _backgroundView = [[UIImageView alloc]initWithFrame:frame];
+        _backgroundView.translatesAutoresizingMaskIntoConstraints = 0;
+        [_backgroundView setImage:image];
+        [self addSubview:_backgroundView];
+        
+        [NSLayoutConstraint activateConstraints:@[
+                                                  [self.backgroundView.topAnchor constraintEqualToAnchor:self.topAnchor constant:0],
+                                                  [self.backgroundView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:0],
+                                                  [self.backgroundView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:0],
+                                                  [self.backgroundView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:0],
+                                                  ]];
     }
     return self;
 }
