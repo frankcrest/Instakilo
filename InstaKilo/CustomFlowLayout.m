@@ -47,5 +47,13 @@
     return array;
 }
 
+- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{
+    UICollectionViewLayoutAttributes* attribute = [super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath];
+    
+    attribute.transform = CGAffineTransformTranslate(attribute.transform, 0 ,self.collectionView.frame.size.height);
+    attribute.alpha = 0;
+    
+    return attribute;
+}
 
 @end

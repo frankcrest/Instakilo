@@ -17,7 +17,6 @@
         _imageView.translatesAutoresizingMaskIntoConstraints = 0;
         _imageView.transform = CGAffineTransformMakeRotation(M_PI_2 / arc4random_uniform(40));
         CGFloat diagonal = sqrt(self.frame.size.width + self.frame.size.height);
-        
         [self addSubview: _imageView];
         
         [NSLayoutConstraint activateConstraints:@[
@@ -29,6 +28,5 @@
     }
     return self;
 }
-
 
 @end
