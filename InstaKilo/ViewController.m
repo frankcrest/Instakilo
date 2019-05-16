@@ -24,6 +24,8 @@
 @property (nonatomic,strong) UISegmentedControl* segmentControl;
 @property (nonatomic,strong) NSMutableArray* imageCollectionByLocation;
 @property (nonatomic,strong) NSMutableArray* selectedImageCollection;
+@property (nonatomic,assign) CGPoint initialPoint;
+@property (nonatomic,assign) CGPoint centerPoint;
 
 @end
 
@@ -40,10 +42,12 @@
     tapGesture.numberOfTapsRequired = 2;
     [self.collectionView addGestureRecognizer:tapGesture];
     
+    UIPinchGestureRecognizer* pinchGesture = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(handlePinch:)];
+    [self.collectionView addGestureRecognizer:pinchGesture];
+    
     self.collectionView.dragInteractionEnabled = YES;
     self.collectionView.dragDelegate = self;
     self.collectionView.dropDelegate = self;
-    
 }
 
 -(void)setupData{
@@ -172,7 +176,6 @@
     if (coordinator.destinationIndexPath != nil) {
         indexPath = coordinator.destinationIndexPath;
         destinationIndexPath = indexPath;
-        NSLog(@"destination %@", destinationIndexPath);
     }
     if (coordinator.proposal.operation == UIDropOperationMove && destinationIndexPath != nil) {
         [self reorderItems:coordinator destinationIndexPath:destinationIndexPath collectionView:self.collectionView];
@@ -187,9 +190,6 @@ collectionView:(UICollectionView*)collectionView{
          id<UICollectionViewDropItem> item = coordinator.items.firstObject;
         if (item.sourceIndexPath != nil) {
             sourceIndexPath = item.sourceIndexPath;
-            NSLog(@"source %@", sourceIndexPath);
-            NSLog(@"destination %@", destinationIndexPath);
-            
             [self.collectionView performBatchUpdates:^{
                 if (sourceIndexPath.section == destinationIndexPath.section) {
                     id object = [self.selectedImageCollection[sourceIndexPath.section] objectAtIndex:sourceIndexPath.item];
@@ -208,4 +208,23 @@ collectionView:(UICollectionView*)collectionView{
         }
     }
 }
+
+-(void)handlePinch:(UIPinchGestureRecognizer*)sender{
+    CustomFlowLayout* customFlowLayout = (CustomFlowLayout*)self.collectionView.collectionViewLayout;
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        self.initialPoint = [sender locationInView:self.collectionView];
+        NSLog(@"%f",self.initialPoint.x);
+        NSIndexPath* pinchCellPath = [self.collectionView indexPathForItemAtPoint:self.initialPoint];
+        CustomCollectionViewCell* customCell = (CustomCollectionViewCell*) [self.collectionView cellForItemAtIndexPath:pinchCellPath];
+        self.centerPoint = customCell.center;
+        customFlowLayout.pinchedCellPath = pinchCellPath;
+    } else if (sender.state == UIGestureRecognizerStateChanged){
+        customFlowLayout.pinchedCellScale = sender.scale;
+        customFlowLayout.pinchedCellCenter = [sender locationInView:self.collectionView];
+    } else if (sender.state == UIGestureRecognizerStateEnded){
+        customFlowLayout.pinchedCellScale = 1;
+        customFlowLayout.pinchedCellCenter = self.centerPoint;
+    }
+}
+
 @end
