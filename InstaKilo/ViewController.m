@@ -12,7 +12,7 @@
 #import "DecorationView.h"
 #import "CustomFlowLayout.h"
 
-@interface ViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface ViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDragDelegate, UICollectionViewDropDelegate>
 
 @property (nonatomic,strong) UICollectionView* collectionView;
 @property (nonatomic,strong) NSMutableArray* imageNamesForSubject1;
@@ -39,6 +39,11 @@
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleDoubleTapped:)];
     tapGesture.numberOfTapsRequired = 2;
     [self.collectionView addGestureRecognizer:tapGesture];
+    
+    self.collectionView.dragInteractionEnabled = YES;
+    self.collectionView.dragDelegate = self;
+    self.collectionView.dropDelegate = self;
+    
 }
 
 -(void)setupData{
@@ -128,7 +133,7 @@
         
         if (self.selectedImageCollection[indexPath.section] != nil) {
             NSMutableArray* selectedArray = self.selectedImageCollection[indexPath.section];
-            [selectedArray removeObjectAtIndex:indexPath.row];
+            [selectedArray removeObjectAtIndex:indexPath.item];
             [self.selectedImageCollection replaceObjectAtIndex:indexPath.section withObject:selectedArray];
             NSArray *indexes = [[NSArray alloc]initWithObjects:indexPath, nil];
             [self.collectionView deleteItemsAtIndexPaths:indexes];
@@ -139,4 +144,68 @@
 
 }
 
+- (NSArray<UIDragItem *> *)collectionView:(UICollectionView *)collectionView itemsForBeginningDragSession:(id<UIDragSession>)session atIndexPath:(NSIndexPath *)indexPath{
+    UIDragItem* item = self.selectedImageCollection[indexPath.section][indexPath.item];
+    NSItemProvider * itemProvider = [[NSItemProvider alloc]initWithObject:(NSString*) item];
+    UIDragItem* dragItem = [[UIDragItem alloc]initWithItemProvider:itemProvider];
+    dragItem.localObject = item;
+    NSArray* dragItemAray = [[NSArray alloc]initWithObjects:dragItem, nil];
+    return dragItemAray;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+- (UICollectionViewDropProposal *)collectionView:(UICollectionView *)collectionView dropSessionDidUpdate:(id<UIDropSession>)session withDestinationIndexPath:(NSIndexPath *)destinationIndexPath{
+    if (self.collectionView.hasActiveDrag) {
+        UICollectionViewDropProposal* dropProposal = [[UICollectionViewDropProposal alloc]initWithDropOperation:UIDropOperationMove intent:UICollectionViewDropIntentInsertAtDestinationIndexPath];
+        return dropProposal;
+    }
+    UICollectionViewDropProposal*  dropProposal = [[UICollectionViewDropProposal alloc]initWithDropOperation:UIDropOperationForbidden];
+    return dropProposal;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView performDropWithCoordinator:(id<UICollectionViewDropCoordinator>)coordinator{
+    NSIndexPath* destinationIndexPath = [[NSIndexPath alloc]init];
+    NSIndexPath* indexPath = [[NSIndexPath alloc]init];
+    if (coordinator.destinationIndexPath != nil) {
+        indexPath = coordinator.destinationIndexPath;
+        destinationIndexPath = indexPath;
+        NSLog(@"destination %@", destinationIndexPath);
+    }
+    if (coordinator.proposal.operation == UIDropOperationMove && destinationIndexPath != nil) {
+        [self reorderItems:coordinator destinationIndexPath:destinationIndexPath collectionView:self.collectionView];
+    }
+}
+        
+-(void)reorderItems:(id<UICollectionViewDropCoordinator>)coordinator destinationIndexPath:(NSIndexPath*)destinationIndexPath
+collectionView:(UICollectionView*)collectionView{
+    
+    NSIndexPath* sourceIndexPath = [[NSIndexPath alloc]init];
+    if (coordinator.items.firstObject != nil) {
+         id<UICollectionViewDropItem> item = coordinator.items.firstObject;
+        if (item.sourceIndexPath != nil) {
+            sourceIndexPath = item.sourceIndexPath;
+            NSLog(@"source %@", sourceIndexPath);
+            NSLog(@"destination %@", destinationIndexPath);
+            
+            [self.collectionView performBatchUpdates:^{
+                if (sourceIndexPath.section == destinationIndexPath.section) {
+                    id object = [self.selectedImageCollection[sourceIndexPath.section] objectAtIndex:sourceIndexPath.item];
+                    [self.selectedImageCollection[sourceIndexPath.section] removeObjectAtIndex:sourceIndexPath.row];
+                    [self.selectedImageCollection[sourceIndexPath.section]insertObject:object atIndex:destinationIndexPath.item];
+                } else {
+                    id object = [self.selectedImageCollection[sourceIndexPath.section] objectAtIndex:sourceIndexPath.item];
+                    [self.selectedImageCollection[sourceIndexPath.section]removeObjectAtIndex:sourceIndexPath.item];
+                    [self.selectedImageCollection[destinationIndexPath.section]insertObject:object atIndex:destinationIndexPath.item];
+                }
+                [self.collectionView deleteItemsAtIndexPaths:@[sourceIndexPath]];
+                [self.collectionView insertItemsAtIndexPaths:@[destinationIndexPath]];
+
+            } completion:nil];
+            [coordinator dropItem:item.dragItem toItemAtIndexPath:destinationIndexPath];
+        }
+    }
+}
 @end

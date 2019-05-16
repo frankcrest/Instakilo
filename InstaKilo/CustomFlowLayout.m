@@ -34,12 +34,12 @@
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect{
     NSMutableArray* array = [[NSMutableArray alloc]initWithArray:[super layoutAttributesForElementsInRect:rect]];
     
-    for (UICollectionViewLayoutAttributes *attr in array) {
-        if (attr.representedElementCategory != UICollectionElementCategoryCell) {
-            continue;
-        }
-    }
-    
+//    for (UICollectionViewLayoutAttributes *attr in array) {
+//        if (attr.representedElementCategory != UICollectionElementCategoryCell) {
+//            continue;
+//        }
+//    }
+//    
     UICollectionViewLayoutAttributes* deatts = [self layoutAttributesForDecorationViewOfKind:@"customDecoration" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
     if (CGRectIntersectsRect(rect, deatts.frame)) {
         [array addObject:deatts];
